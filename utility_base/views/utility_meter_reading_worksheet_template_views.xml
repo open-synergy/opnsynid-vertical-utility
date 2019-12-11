@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2019 OpenSynergy Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<openerp>
+<data>
+<record id="utility_meter_reading_worksheet_template_view_search" model="ir.ui.view">
+    <field name="name">utility.meter_reading_worksheet_template search</field>
+    <field name="model">utility.meter_reading_worksheet_template</field>
+    <field name="arch" type="xml">
+        <search>
+            <field name="name"/>
+            <field name="code"/>
+        </search>
+    </field>
+</record>
+
+<record id="utility_meter_reading_worksheet_template_view_tree" model="ir.ui.view">
+    <field name="name">utility.meter_reading_worksheet_template tree</field>
+    <field name="model">utility.meter_reading_worksheet_template</field>
+    <field name="arch" type="xml">
+        <tree>
+            <field name="name"/>
+            <field name="code"/>
+        </tree>
+    </field>
+</record>
+
+<record id="utility_meter_reading_worksheet_template_view_form" model="ir.ui.view">
+    <field name="name">utility.meter_reading_worksheet_template form</field>
+    <field name="model">utility.meter_reading_worksheet_template</field>
+    <field name="arch" type="xml">
+        <form>
+            <header>
+                <button name="action_generate_worksheet" type="object" string="Create Worksheet" icon="gtk-execute"/>
+                <button name="action_generate_cron" type="object" string="Create Cron" icon="gtk-execute" attrs="{'invisible':[('cron_id','!=',False)]}"/>
+            </header>
+            <sheet>
+                <div class="oe_right oe_button_box" style="width: 300px;" name="buttons"/>
+                <group name="group_1" colspan="4" col="2">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="active"/>
+                    <field name="worksheet_sequence_id"/>
+                    <field name="default_user_id"/>
+                    <field name="estimate_work_hour"/>
+                    <field name="estimate_work_minute"/>
+                    <field name="cron_id"/>
+                </group>
+                <notebook>
+                    <page name="meter" string="Meter(s)">
+                        <group name="meter_1" colspan="4" col="2">
+                            <field name="meter_ids" nolabel="1" colspan="2"/>
+                        </group>
+                    </page>
+                    <page name="workflow_policy" string="Workflow Policy">
+                        <group name="workflow_policy_1" colspan="4" col="2">
+                            <field name="worksheet_confirm_grp_ids" widget="many2many_tags"/>
+                            <field name="worksheet_approve_grp_ids" widget="many2many_tags"/>
+                            <field name="worksheet_start_grp_ids" widget="many2many_tags"/>
+                            <field name="worksheet_done_grp_ids" widget="many2many_tags"/>
+                            <field name="worksheet_cancel_grp_ids" widget="many2many_tags"/>
+                            <field name="worksheet_restart_grp_ids" widget="many2many_tags"/>
+                        </group>
+                    </page>
+                </notebook>
+            </sheet>
+        </form>
+    </field>
+</record>
+
+<record id="utility_meter_reading_worksheet_template_action" model="ir.actions.act_window">
+    <field name="name">Meter Reading Worksheet Templates</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">utility.meter_reading_worksheet_template</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+<menuitem
+    id="utility_meter_reading_worksheet_template_menu"
+    name="Meter Reading Worksheet Templates"
+    parent="utility_configuration_menu"
+    action="utility_meter_reading_worksheet_template_action"
+    sequence="2"
+    />
+
+</data>
+</openerp>

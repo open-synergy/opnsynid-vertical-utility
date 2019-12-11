@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2019 OpenSynergy Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<openerp>
+<data>
+<record id="utility_meter_reading_worksheet_start_view_form" model="ir.ui.view">
+    <field name="name">utility.meter_reading_worksheet_start form</field>
+    <field name="model">utility.meter_reading_worksheet_start</field>
+    <field name="arch" type="xml">
+        <form>
+            <group name="header" colspan="4" col="2">
+                <field name="date_start"/>
+            </group>
+            <footer>
+                <button name="action_start" string="Start" class="oe_highlight" type="object"/>
+                or
+                <button special="cancel" string="Cancel" class="oe_link"/>
+            </footer>
+        </form>
+    </field>
+</record>
+
+<record id="utility_meter_reading_worksheet_start_action" model="ir.actions.act_window">
+    <field name="name">Start Worksheet</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">utility.meter_reading_worksheet_start</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+</record>
+
+</data>
+</openerp>

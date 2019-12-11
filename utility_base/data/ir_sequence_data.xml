@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!-- Copyright 2019 OpenSynergy Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl-3.0) -->
+<openerp>
+<data>
+
+<record id="seq_type_meter_reading" model="ir.sequence.type">
+    <field name="name">Meter Reading</field>
+    <field name="code">meter.reading</field>
+</record>
+
+<record id="seq_type_meter_reading_worksheet" model="ir.sequence.type">
+    <field name="name">Meter Reading Worksheet</field>
+    <field name="code">mtr.read.sheet</field>
+</record>
+
+</data>
+
+<data noupdate="1">
+<record id="sequence_meter_reading" model="ir.sequence">
+    <field name="name">Meter Reading</field>
+    <field name="code">meter.reading</field>
+    <field name="padding">6</field>
+    <field name="prefix">MTR/%(year)s/</field>
+    <field eval="1" name="number_next"/>
+    <field eval="1" name="number_increment"/>
+</record>
+
+<record id="sequence_meter_reading_worksheet" model="ir.sequence">
+    <field name="name">Meter Reading Worksheet</field>
+    <field name="code">mtr.read.sheet</field>
+    <field name="padding">6</field>
+    <field name="prefix">WRK/%(year)s/</field>
+    <field eval="1" name="number_next"/>
+    <field eval="1" name="number_increment"/>
+</record>
+</data>
+</openerp>

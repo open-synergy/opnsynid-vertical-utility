@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2019 OpenSynergy Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<openerp>
+<data>
+<record id="utility_meter_reading_view_search" model="ir.ui.view">
+    <field name="name">utility.meter_reading search</field>
+    <field name="model">utility.meter_reading</field>
+    <field name="arch" type="xml">
+        <search>
+            <field name="name"/>
+            <field name="meter_id"/>
+            <field name="worksheet_id"/>
+        </search>
+    </field>
+</record>
+
+<record id="utility_meter_reading_view_tree" model="ir.ui.view">
+    <field name="name">utility.meter_reading tree</field>
+    <field name="model">utility.meter_reading</field>
+    <field name="arch" type="xml">
+        <tree>
+            <field name="name"/>
+            <field name="meter_id"/>
+            <field name="worksheet_id"/>
+            <field name="date_reading"/>
+            <field name="amount_reading"/>
+            <field name="amount_usage"/>
+            <field name="uom_id"/>
+            <field name="state"/>
+            <button name="action_valid" string="Valid" type="object" icon="gtk-apply" attrs="{'invisible':[('state','!=','draft')]}"/>
+            <button name="action_recompute" string="Recompute" type="object" icon="gtk-execute" attrs="{'invisible':[('state','!=','draft')]}"/>
+            <button name="action_draft" string="Reset to Draft" type="object" icon="gtk-cancel"  attrs="{'invisible':[('state','!=','valid')]}"/>
+        </tree>
+    </field>
+</record>
+
+<record id="utility_meter_reading_view_form" model="ir.ui.view">
+    <field name="name">utility.meter_reading form</field>
+    <field name="model">utility.meter_reading</field>
+    <field name="arch" type="xml">
+        <form>
+            <header>
+                <button name="action_valid" string="Valid" type="object" class="oe_highlight" attrs="{'invisible':[('state','!=','draft')]}"/>
+                <button name="action_recompute" string="Recompute" type="object" icon="gtk-execute" attrs="{'invisible':[('state','!=','draft')]}"/>
+                <button name="action_draft" string="Reset to Draft" type="object" attrs="{'invisible':[('state','!=','valid')]}"/>
+                <field name="state" widget="statusbar"/>
+            </header>
+            <sheet>
+                <div class="oe_right oe_button_box" style="width: 300px;" name="buttons"/>
+                <group name="group_1" colspan="4" col="2">
+                    <field name="name"/>
+                    <field name="meter_id"/>
+                    <field name="worksheet_id" readonly="1"/>
+                    <field name="date_reading"/>
+                    <field name="amount_reading"/>
+                    <field name="previous_reading_id"/>
+                    <field name="amount_usage"/>
+                    <field name="uom_id"/>
+                </group>
+                <notebook/>
+            </sheet>
+        </form>
+    </field>
+</record>
+
+<record id="utility_meter_reading_action" model="ir.actions.act_window">
+    <field name="name">Meter Readings</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">utility.meter_reading</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+<menuitem
+    id="utility_meter_reading_menu"
+    name="Meter Readings"
+    parent="utility_meter_reading_root_menu"
+    action="utility_meter_reading_action"
+    sequence="1"
+    />
+
+</data>
+</openerp>

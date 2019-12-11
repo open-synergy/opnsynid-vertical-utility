@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2019 OpenSynergy Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<openerp>
+<data>
+<record id="utility_type_view_search" model="ir.ui.view">
+    <field name="name">utility.type search</field>
+    <field name="model">utility.type</field>
+    <field name="arch" type="xml">
+        <search>
+            <field name="name"/>
+            <field name="code"/>
+            <field name="uom_category_id"/>
+        </search>
+    </field>
+</record>
+
+<record id="utility_type_view_tree" model="ir.ui.view">
+    <field name="name">utility.type tree</field>
+    <field name="model">utility.type</field>
+    <field name="arch" type="xml">
+        <tree>
+            <field name="name"/>
+            <field name="code"/>
+            <field name="uom_category_id"/>
+        </tree>
+    </field>
+</record>
+
+<record id="utility_type_view_form" model="ir.ui.view">
+    <field name="name">utility.type form</field>
+    <field name="model">utility.type</field>
+    <field name="arch" type="xml">
+        <form>
+            <header/>
+            <sheet>
+                <div class="oe_right oe_button_box" style="width: 300px;" name="buttons"/>
+                <group name="group_1" colspan="4" col="2">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="active"/>
+                </group>
+                <notebook>
+                    <page name="uom" string="UoM">
+                        <group name="uom_1" colspan="4" col="2">
+                            <field name="uom_category_id"/>
+                            <field name="allowed_uom_ids" domain="[('category_id','=',uom_category_id)]" widget="many2many_tags"/>
+                        </group>
+                    </page>
+                </notebook>
+            </sheet>
+        </form>
+    </field>
+</record>
+
+<record id="utility_type_action" model="ir.actions.act_window">
+    <field name="name">Utility Types</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">utility.type</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+<menuitem
+    id="utility_type_menu"
+    name="Utility Types"
+    parent="utility_configuration_menu"
+    action="utility_type_action"
+    sequence="1"
+    />
+
+</data>
+</openerp>

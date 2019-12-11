@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2019 OpenSynergy Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<openerp>
+<data>
+<record id="utility_meter_view_search" model="ir.ui.view">
+    <field name="name">utility.meter search</field>
+    <field name="model">utility.meter</field>
+    <field name="arch" type="xml">
+        <search>
+            <field name="name"/>
+            <field name="partner_id"/>
+            <field name="type_id"/>
+            <field name="uom_id"/>
+        </search>
+    </field>
+</record>
+
+<record id="utility_meter_view_tree" model="ir.ui.view">
+    <field name="name">utility.meter tree</field>
+    <field name="model">utility.meter</field>
+    <field name="arch" type="xml">
+        <tree>
+            <field name="name"/>
+            <field name="partner_id"/>
+            <field name="type_id"/>
+            <field name="uom_id"/>
+        </tree>
+    </field>
+</record>
+
+<record id="utility_meter_view_form" model="ir.ui.view">
+    <field name="name">utility.meter form</field>
+    <field name="model">utility.meter</field>
+    <field name="arch" type="xml">
+        <form>
+            <header/>
+            <sheet>
+                <div class="oe_right oe_button_box" style="width: 300px;" name="buttons"/>
+                <group name="group_1" colspan="4" col="2">
+                    <field name="name"/>
+                    <field name="type_id"/>
+                    <field name="partner_id"/>
+                    <field name="meter_reading_sequence_id"/>
+                </group>
+                <notebook>
+                    <page name="uom" string="UoM">
+                        <group name="uom_1" colspan="4" col="2">
+                            <field name="uom_id" domain="[('id','in',allowed_uom_ids[0][2])]"/>
+                            <field name="allowed_uom_ids" widget="many2many_tags" invisible="1"/>
+                        </group>
+                    </page>
+                </notebook>
+            </sheet>
+        </form>
+    </field>
+</record>
+
+<record id="utility_meter_action" model="ir.actions.act_window">
+    <field name="name">Utility Meters</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">utility.meter</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+<menuitem
+    id="utility_meter_menu"
+    name="Utility Meters"
+    parent="utility_configuration_menu"
+    action="utility_meter_action"
+    sequence="2"
+    />
+
+</data>
+</openerp>
