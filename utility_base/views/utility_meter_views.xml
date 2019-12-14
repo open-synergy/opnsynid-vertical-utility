@@ -26,6 +26,7 @@
             <field name="partner_id"/>
             <field name="type_id"/>
             <field name="uom_id"/>
+            <field name="tz"/>
         </tree>
     </field>
 </record>
@@ -42,6 +43,7 @@
                     <field name="name"/>
                     <field name="type_id"/>
                     <field name="partner_id"/>
+                    <field name="tz"/>
                     <field name="meter_reading_sequence_id"/>
                 </group>
                 <notebook>

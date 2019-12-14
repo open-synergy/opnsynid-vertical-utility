@@ -2,8 +2,10 @@
 # Copyright 2019 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from datetime import datetime
 from openerp import models, fields, api, _
 from openerp.exceptions import Warning as UserError
+from pytz import timezone
 
 
 class UtilityMeterReading(models.Model):
@@ -27,6 +29,25 @@ class UtilityMeterReading(models.Model):
                 prev_reading = document._get_previous_reading()
                 document.previous_reading_id = prev_reading and \
                     prev_reading.id or False
+
+    @api.multi
+    @api.depends(
+        "meter_id",
+        "date_reading",
+    )
+    def _compute_date_reading_tz(self):
+        for document in self:
+            document.date_reading_tz = False
+            if document.meter_id and document.date_reading:
+                tz = document._get_tz()
+                date_reading = datetime.strptime(
+                    document.date_reading, "%Y-%m-%d %H:%M:%S")
+                date_reading = timezone("UTC").localize(date_reading)
+                date_reading = date_reading.astimezone(timezone(tz))
+                # TODO: Not sure this is the right syntax
+                date_reading = date_reading.replace(tzinfo=None)
+                document.date_reading_tz = date_reading.strftime(
+                    "%Y-%m-%d %H:%M:%S")
 
     @api.multi
     @api.depends(
@@ -98,6 +119,11 @@ class UtilityMeterReading(models.Model):
                 ("readonly", False),
             ],
         },
+    )
+    date_reading_tz = fields.Datetime(
+        string="Date According Meter Timezone",
+        compute="_compute_date_reading_tz",
+        store=True,
     )
     amount_reading = fields.Float(
         string="Value",
@@ -213,3 +239,11 @@ class UtilityMeterReading(models.Model):
             ("id", "=", self.id),
             ("meter_id", "!=", self.meter_id.id),
         ]
+
+    @api.multi
+    def _get_tz(self):
+        self.ensure_one()
+        if self.meter_id.tz:
+            return self.meter_id.tz
+        else:
+            return self.env.user.company_id.partner_id.tz
