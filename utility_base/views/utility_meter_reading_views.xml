@@ -54,6 +54,7 @@
                     <field name="meter_id"/>
                     <field name="worksheet_id" readonly="1"/>
                     <field name="date_reading"/>
+                    <field name="date_reading_tz" invisible="1"/>
                     <field name="amount_reading"/>
                     <field name="previous_reading_id"/>
                     <field name="amount_usage"/>
