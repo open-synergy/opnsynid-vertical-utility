@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2019 OpenSynergy Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<openerp>
+<data>
+<record id="utility_contract_invoice_item_view_search" model="ir.ui.view">
+    <field name="name">utility.contract_invoice_item search</field>
+    <field name="model">utility.contract_invoice_item</field>
+    <field name="arch" type="xml">
+        <search>
+            <field name="name"/>
+            <field name="code"/>
+            <field name="product_id"/>
+        </search>
+    </field>
+</record>
+
+<record id="utility_contract_invoice_item_view_tree" model="ir.ui.view">
+    <field name="name">utility.contract_invoice_item tree</field>
+    <field name="model">utility.contract_invoice_item</field>
+    <field name="arch" type="xml">
+        <tree>
+            <field name="name"/>
+            <field name="code"/>
+            <field name="product_id"/>
+        </tree>
+    </field>
+</record>
+
+<record id="utility_contract_invoice_item_view_form" model="ir.ui.view">
+    <field name="name">utility.contract_invoice_item form</field>
+    <field name="model">utility.contract_invoice_item</field>
+    <field name="arch" type="xml">
+        <form>
+            <header/>
+            <sheet>
+                <div class="oe_right oe_button_box" style="width: 300px;" name="buttons"/>
+                <group name="group_1" colspan="4" col="2">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="active"/>
+                    <field name="product_id"/>
+                    <field name="allowed_utility_type_ids" widget="many2many_tags"/>
+                    <field name="default_sequence"/>
+                </group>
+                <notebook>
+                    <page name="qty_computation" string="Qty Computation">
+                        <group name="qty_computation_1" colspan="4" col="2">
+                            <field name="qty_computation_method"/>
+                        </group>
+                        <group name="qty_computation_2" string="Python Code" attrs="{'invisible':[('qty_computation_method','=','manual')]}" colspan="4" col="2">
+                            <field name="python_code_qty" nolabel="1" colspan="2"/>
+                        </group>
+                    </page>
+                    <page name="unit_price_computation" string="Unit Price Computation">
+                        <group name="unit_price_computation_1" colspan="4" col="2">
+                            <field name="unit_price_computation_method"/>
+                        </group>
+                        <group name="unit_price_computation_2" string="Python Code" attrs="{'invisible':[('unit_price_computation_method','=','default')]}" colspan="4" col="2">
+                            <field name="python_code_unit_price" nolable="1"/>
+                        </group>
+                    </page>
+                </notebook>
+            </sheet>
+        </form>
+    </field>
+</record>
+
+<record id="utility_contract_invoice_item_action" model="ir.actions.act_window">
+    <field name="name">Contract Invoice Items</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">utility.contract_invoice_item</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+<menuitem
+    id="utility_contract_invoice_item_menu"
+    name="Contract Invoice Items"
+    parent="utility_base.utility_configuration_menu"
+    action="utility_contract_invoice_item_action"
+    sequence="21"
+    />
+
+</data>
+</openerp>

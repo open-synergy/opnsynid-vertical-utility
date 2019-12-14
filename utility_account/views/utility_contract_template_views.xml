@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2019 OpenSynergy Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<openerp>
+<data>
+<record id="utility_contract_template_view_search" model="ir.ui.view">
+    <field name="name">utility.contract_template search</field>
+    <field name="model">utility.contract_template</field>
+    <field name="arch" type="xml">
+        <search>
+            <field name="name"/>
+            <field name="code"/>
+        </search>
+    </field>
+</record>
+
+<record id="utility_contract_template_view_tree" model="ir.ui.view">
+    <field name="name">utility.contract_template tree</field>
+    <field name="model">utility.contract_template</field>
+    <field name="arch" type="xml">
+        <tree>
+            <field name="name"/>
+            <field name="code"/>
+        </tree>
+    </field>
+</record>
+
+<record id="utility_contract_template_view_form" model="ir.ui.view">
+    <field name="name">utility.contract_template form</field>
+    <field name="model">utility.contract_template</field>
+    <field name="arch" type="xml">
+        <form>
+            <header/>
+            <sheet>
+                <div class="oe_right oe_button_box" style="width: 300px;" name="buttons"/>
+                <group name="group_1" colspan="4" col="2">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="active"/>
+                    <field name="contract_sequence_id"/>
+                </group>
+                <notebook>
+                    <page name="workflow_policy" string="Workflow Policy">
+                        <group name="workflow_policy_1" colspan="4" col="2">
+                            <field name="contract_confirm_grp_ids" widget="many2many_tags"/>
+                            <field name="contract_approve_grp_ids" widget="many2many_tags"/>
+                            <field name="contract_start_grp_ids" widget="many2many_tags"/>
+                            <field name="contract_done_grp_ids" widget="many2many_tags"/>
+                            <field name="contract_cancel_grp_ids" widget="many2many_tags"/>
+                            <field name="contract_terminate_grp_ids" widget="many2many_tags"/>
+                            <field name="contract_restart_grp_ids" widget="many2many_tags"/>
+                        </group>
+                    </page>
+                </notebook>
+            </sheet>
+        </form>
+    </field>
+</record>
+
+<record id="utility_contract_template_action" model="ir.actions.act_window">
+    <field name="name">Utility Contract Templates</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">utility.contract_template</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+<menuitem
+    id="utility_contract_template_menu"
+    name="Utility Contract Templates"
+    parent="utility_base.utility_configuration_menu"
+    action="utility_contract_template_action"
+    sequence="3"
+    />
+
+</data>
+</openerp>
