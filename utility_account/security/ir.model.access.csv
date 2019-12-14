@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+utility_contract_invoice_item_employee,utility.contract_invoice_item - user,model_utility_contract_invoice_item,base.group_user,1,1,1,1
+utility_contract_invoice_item_all,utility.contract_invoice_item - all,model_utility_contract_invoice_item,,1,0,0,0
+utility_contract_invoice_line_employee,utility.contract_invoice_line - user,model_utility_contract_invoice_line,base.group_user,1,1,1,1
+utility_contract_invoice_line_all,utility.contract_invoice_line - all,model_utility_contract_invoice_line,,1,0,0,0
+utility_contract_invoice_schedule_employee,utility.contract_invoice_schedule - user,model_utility_contract_invoice_schedule,base.group_user,1,1,1,1
+utility_contract_invoice_schedule_all,utility.contract_invoice_schedule - all,model_utility_contract_invoice_schedule,,1,0,0,0
+utility_contract_template_employee,utility.contract_template - user,model_utility_contract_template,base.group_user,1,1,1,1
+utility_contract_template_all,utility.contract_template - all,model_utility_contract_template,,1,0,0,0
+utility_contract_employee,utility.contract - user,model_utility_contract,base.group_user,1,1,1,1
+utility_contract_all,utility.contract - all,model_utility_contract,,1,0,0,0
