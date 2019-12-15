@@ -43,6 +43,22 @@ class UtilityContractInvoiceSchedule(models.Model):
         ondelete="cascade",
         copy=False,
     )
+    meter_id = fields.Many2one(
+        string="# Meter",
+        related="contract_id.meter_id",
+        comodel_name="utility.meter",
+        store=True,
+    )
+    partner_id = fields.Many2one(
+        string="Customer",
+        related="contract_id.partner_id",
+        comodel_name="res.partner",
+        store=True,
+    )
+    period_start_date = fields.Date(
+        string="Period Start Date",
+        required=True,
+    )
     schedule_date = fields.Date(
         string="Schedule Date",
         required=True,
@@ -143,6 +159,8 @@ class UtilityContractInvoiceSchedule(models.Model):
         payment_term = self._get_payment_term() or False
         lines = self._get_invoice_lines()
         contract = self.contract_id
+        template = contract.template_id
+        bank = self._get_bank_account()
         return {
             "partner_id": contract.partner_id.id,
             "origin": contract.name,
@@ -152,6 +170,8 @@ class UtilityContractInvoiceSchedule(models.Model):
             "date_invoice": self.schedule_date,
             "payment_term_id": payment_term and payment_term.id or False,
             "invoice_line": lines,
+            "name": template._get_invoice_description(self),
+            "partner_bank_id": bank and bank.id or False,
         }
 
     @api.multi
@@ -161,6 +181,15 @@ class UtilityContractInvoiceSchedule(models.Model):
         contract = self.contract_id
         if contract:
             result = contract.journal_id
+        return result
+
+    @api.multi
+    def _get_bank_account(self):
+        self.ensure_one()
+        result = False
+        contract = self.contract_id
+        if contract:
+            result = contract.bank_account_id
         return result
 
     @api.multi
@@ -214,3 +243,15 @@ class UtilityContractInvoiceSchedule(models.Model):
                     raise UserError(strWarning)
         _super = super(UtilityContractInvoiceSchedule, self)
         _super.unlink()
+
+    @api.model
+    def cron_create_invoice(self):
+        today = fields.Date.today()
+        obj_schedule = self.env["utility.contract_invoice_schedule"]
+        criteria = [
+            ("schedule_date", "=", today),
+            ("state", "=", "uninvoiced"),
+            ("contract_id.state", "=", "open"),
+        ]
+        schedules = obj_schedule.search(criteria)
+        schedules.action_generate_invoice()

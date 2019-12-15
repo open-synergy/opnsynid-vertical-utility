@@ -88,6 +88,7 @@ class UtilityContractInvoiceLine(models.Model):
         income_account = self._get_income_account()
         uom = self._get_uos()
         taxes = self._get_taxes()
+        analytic = self._get_analytic()
         return {
             "name": self.item_id.name,
             "product_id": self.item_id.product_id.id,
@@ -96,7 +97,13 @@ class UtilityContractInvoiceLine(models.Model):
             "uos_id": uom and uom.id or False,
             "price_unit": self._get_price_unit(),
             "invoice_line_tax_id": taxes,
+            "account_analytic_id": analytic and analytic.id or False,
         }
+
+    @api.multi
+    def _get_analytic(self):
+        self.ensure_one()
+        return self.contract_id.analytic_account_id
 
     @api.multi
     def _get_income_account(self):

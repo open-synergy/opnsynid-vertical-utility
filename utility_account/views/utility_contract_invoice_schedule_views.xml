@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2019 OpenSynergy Indonesia
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<openerp>
+<data>
+<record id="utility_contract_invoice_schedule_view_search" model="ir.ui.view">
+    <field name="name">utility.contract_invoice_schedule search</field>
+    <field name="model">utility.contract_invoice_schedule</field>
+    <field name="arch" type="xml">
+        <search>
+            <field name="contract_id"/>
+            <field name="meter_id"/>
+            <field name="partner_id"/>
+            <field name="schedule_date"/>
+            <field name="invoice_id"/>
+            <field name="state"/>
+            <group name="dom_manual" string="Controlled/Uncontrolled">
+                <filter name="dom_controlled" string="Controlled" domain="[('manual','=',False)]"/>
+                <filter name="dom_uncontrolled" string="Uncontrolled" domain="[('manual','=',True)]"/>
+            </group>
+            <group name="dom_state" string="State">
+                <filter name="dom_state_uninvoiced" string="Uninvoiced" domain="[('state','=','uninvoiced')]"/>
+                <filter name="dom_state_invoiced" string="Invoiced" domain="[('state','=','invoiced')]"/>
+                <filter name="dom_state_done" string="Done/Paid" domain="[('state','=','done')]"/>
+            </group>
+            <group name="groupby" string="Group By..">
+                <filter name="grp_contract" string="# Contract" context="{'group_by':'contract_id'}"/>
+                <filter name="grp_meter" string="Meter" context="{'group_by':'meter_id'}"/>
+                <filter name="grp_partner" string="Customer" context="{'group_by':'partner_id'}"/>
+                <filter name="grp_invoice" string="# Invoice" context="{'group_by':'invoice_id'}"/>
+                <filter name="grp_state" string="State" context="{'group_by':'state'}"/>
+            </group>
+        </search>
+    </field>
+</record>
+
+<record id="utility_contract_invoice_schedule_view_tree" model="ir.ui.view">
+    <field name="name">utility.contract_invoice_schedule tree</field>
+    <field name="model">utility.contract_invoice_schedule</field>
+    <field name="arch" type="xml">
+        <tree create="false" edit="false" delete="false">
+            <field name="contract_id"/>
+            <field name="partner_id"/>
+            <field name="meter_id"/>
+            <field name="schedule_date"/>
+            <field name="invoice_id"/>
+            <field name="contract_state"/>
+            <field name="manual"/>
+            <field name="state"/>
+            <button name="action_uncontrol_schedule" string="Uncontrol Schedule" icon="gtk-no" type="object" attrs="{'invisible':['|','|',('invoice_id','!=',False),('manual','=',True),('contract_state','!=','open')]}"/>
+            <button name="action_control_schedule" string="Control Schedule" icon="gtk-yes" type="object" attrs="{'invisible':['|',('manual','=',False),('contract_state','!=','open')]}"/>
+            <button name="action_generate_invoice" string="Generate Invoice" icon="gtk-execute" type="object" attrs="{'invisible':['|',('invoice_id','!=',False),('contract_state','!=','open')]}"/>
+            <button name="%(base_print_policy.base_print_document_action)d" string="Print" type="action" icon="gtk-print"/>
+        </tree>
+    </field>
+</record>
+
+<record id="utility_contract_invoice_schedule_view_form" model="ir.ui.view">
+    <field name="name">utility.contract_invoice_schedule form</field>
+    <field name="model">utility.contract_invoice_schedule</field>
+    <field name="arch" type="xml">
+        <form create="false" edit="false" delete="false">
+            <header>
+                <button name="action_uncontrol_schedule" string="Uncontrol Schedule" icon="gtk-no" type="object" attrs="{'invisible':['|','|',('invoice_id','!=',False),('manual','=',True),('contract_state','!=','open')]}"/>
+                <button name="action_control_schedule" string="Control Schedule" icon="gtk-yes" type="object" attrs="{'invisible':['|',('manual','=',False),('contract_state','!=','open')]}"/>
+                <button name="action_generate_invoice" string="Generate Invoice" icon="gtk-execute" type="object" attrs="{'invisible':['|',('invoice_id','!=',False),('contract_state','!=','open')]}"/>
+                <button name="%(base_print_policy.base_print_document_action)d" string="Print" type="action" icon="gtk-print"/>
+                <field name="state" widget="statusbar"/>
+            </header>
+            <sheet>
+                <div class="oe_right oe_button_box" style="width: 300px;" name="buttons"/>
+                <group name="group_1" colspan="4" col="2">
+                    <field name="contract_id"/>
+                    <field name="schedule_date"/>
+                    <field name="invoice_id"/>
+                    <field name="contract_state"/>
+                    <field name="manual"/>
+                </group>
+                <notebook/>
+            </sheet>
+        </form>
+    </field>
+</record>
+
+<record id="utility_contract_invoice_schedule_action" model="ir.actions.act_window">
+    <field name="name">Utility Contract Invoice Schedules</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">utility.contract_invoice_schedule</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+</record>
+
+<menuitem
+    id="utility_contract_invoice_schedule_menu"
+    name="Invoice Schedules"
+    parent="utility_contract_root_menu"
+    action="utility_contract_invoice_schedule_action"
+    sequence="2"
+    />
+
+</data>
+</openerp>
