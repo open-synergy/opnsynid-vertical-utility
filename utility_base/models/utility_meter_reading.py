@@ -73,6 +73,32 @@ class UtilityMeterReading(models.Model):
             if document.meter_id:
                 document.uom_id = document.meter_id.uom_id.id
 
+    @api.multi
+    @api.depends(
+        "amount_reading",
+        "multiplier_ids",
+        "multiplier_ids.multiplier",
+    )
+    def _compute_amount_reading_multiplier(self):
+        for document in self:
+            amount_reading_multiplier = document.amount_reading
+            for multiplier in document.multiplier_ids:
+                amount_reading_multiplier *= multiplier.multiplier
+            document.amount_reading_multiplier = amount_reading_multiplier
+
+    @api.multi
+    @api.depends(
+        "amount_usage",
+        "multiplier_ids",
+        "multiplier_ids.multiplier",
+    )
+    def _compute_amount_usage_multiplier(self):
+        for document in self:
+            amount_usage_multiplier = document.amount_usage
+            for multiplier in document.multiplier_ids:
+                amount_usage_multiplier *= multiplier.multiplier
+            document.amount_usage_multiplier = amount_usage_multiplier
+
     name = fields.Char(
         string="# Reading",
         required=True,
@@ -147,6 +173,22 @@ class UtilityMeterReading(models.Model):
         compute="_compute_uom_id",
         store=True,
     )
+    multiplier_ids = fields.One2many(
+        strng="Multiplier",
+        comodel_name="utility.meter_reading_multiplier",
+        inverse_name="meter_reading_id",
+        readonly=True,
+    )
+    amount_reading_multiplier = fields.Float(
+        string="Amount Reading After Multiply",
+        compute="_compute_amount_reading_multiplier",
+        store=True,
+    )
+    amount_usage_multiplier = fields.Float(
+        string="Amount Usage After Multiply",
+        compute="_compute_amount_usage_multiplier",
+        store=True,
+    )
     state = fields.Selection(
         string="State",
         selection=[
@@ -163,11 +205,13 @@ class UtilityMeterReading(models.Model):
         for document in self:
             document._compute_previous_reading_id()
             document.write(document._prepare_valid_data())
+            document._generate_multipliers()
 
     @api.multi
     def action_draft(self):
         for document in self:
             document.write(document._prepare_draft_data())
+            document.multiplier_ids.unlink()
 
     @api.multi
     def action_recompute(self):
@@ -247,3 +291,13 @@ class UtilityMeterReading(models.Model):
             return self.meter_id.tz
         else:
             return self.env.user.company_id.partner_id.tz
+
+    @api.multi
+    def _generate_multipliers(self):
+        self.ensure_one()
+        result = []
+        for multiplier in self.meter_id.multiplier_ids:
+            result.append(multiplier._generate_multiplier())
+        self.write({
+            "multiplier_ids": result,
+        })

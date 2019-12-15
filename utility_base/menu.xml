@@ -32,6 +32,12 @@
     sequence="99"
     />
 
+<menuitem
+    id="utility_meter_reading_configuration_menu"
+    name="Meter Reading"
+    parent="utility_configuration_menu"
+    sequence="100"
+    />
 
 </data>
 </openerp>

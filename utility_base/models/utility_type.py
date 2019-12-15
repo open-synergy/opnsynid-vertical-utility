@@ -36,6 +36,19 @@ class UtilityType(models.Model):
         column1="type_id",
         column2="uom_id",
     )
+    allowed_multiplier_item_ids = fields.Many2many(
+        string="Allowed Multiplier Item",
+        comodel_name="utility.meter_reading_multiplier_item",
+        relation="rel_multiplier_item_2_utility_type",
+        column1="type_id",
+        column2="item_id",
+        readonly=True,
+    )
+    multiplier_ids = fields.One2many(
+        string="Multiplier Items",
+        comodel_name="utility.type_multiplier",
+        inverse_name="type_id",
+    )
 
     @api.onchange(
         "uom_category_id",

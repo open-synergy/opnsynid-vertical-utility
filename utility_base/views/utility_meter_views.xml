@@ -53,6 +53,20 @@
                             <field name="allowed_uom_ids" widget="many2many_tags" invisible="1"/>
                         </group>
                     </page>
+                    <page name="multiplier" string="Multipliers">
+                        <group name="multiplier_1" colspan="4" col="2">
+                            <field name="allowed_multiplier_item_ids" widget="many2many_tags" invisible="1"/>
+                        </group>
+                        <group name="multiplier_2" colspan="4" col="2">
+                            <field name="multiplier_ids" nolabel="1" col="2">
+                                <tree editable="top">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="item_id" domain="[('id','in',parent.allowed_multiplier_item_ids[0][2])]"/>
+                                    <field name="multiplier"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </page>
                 </notebook>
             </sheet>
         </form>
