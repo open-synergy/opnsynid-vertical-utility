@@ -12,6 +12,13 @@
     sequence="2"
     />
 
+<menuitem
+    id="utility_contract_configuration_menu"
+    name="Contract"
+    parent="utility_base.utility_configuration_menu"
+    sequence="200"
+    />
+
 
 </data>
 </openerp>

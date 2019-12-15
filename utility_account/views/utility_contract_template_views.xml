@@ -41,6 +41,15 @@
                     <field name="contract_sequence_id"/>
                 </group>
                 <notebook>
+                    <page name="invoice" string="Invoice Configuration">
+                        <group name="invoice_1" colspan="4" col="2">
+                            <field name="default_journal_id" domain="[('type','=','sale')]"/>
+                            <field name="default_receivable_account_id" domain="[('type','=','receivable')]"/>
+                            <field name="default_payment_term_id"/>
+                            <field name="default_bank_account_id"/> 
+                            <field name="python_code_invoice_description"/>
+                        </group>
+                    </page>
                     <page name="workflow_policy" string="Workflow Policy">
                         <group name="workflow_policy_1" colspan="4" col="2">
                             <field name="contract_confirm_grp_ids" widget="many2many_tags"/>
@@ -68,10 +77,10 @@
 
 <menuitem
     id="utility_contract_template_menu"
-    name="Utility Contract Templates"
-    parent="utility_base.utility_configuration_menu"
+    name="Templates"
+    parent="utility_contract_configuration_menu"
     action="utility_contract_template_action"
-    sequence="3"
+    sequence="1"
     />
 
 </data>

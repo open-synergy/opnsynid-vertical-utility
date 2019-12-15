@@ -16,6 +16,7 @@
             <field name="analytic_account_id"/>
             <field name="partner_id"/>
             <field name="template_id"/>
+            <field name="bank_account_id"/>
             <group name="group_state" string="State">
                 <filter name="dom_draft" string="Draft" domain="[('state','=','draft')]"/>
                 <filter name="dom_confirm" string="Waiting for Approval" domain="[('state','=','confirm')]"/>
@@ -26,6 +27,19 @@
             </group>
             <group name="group_main" string="Group By..">
                 <filter name="grp_company" string="Company" context="{'group_by':'company_id'}" groups="base.group_multi_company"/>
+                <filter name="grp_user" string="Responsible" context="{'group_by':'user_id'}"/>
+                <filter name="grp_meter" string="Meter" context="{'group_by':'meter_id'}"/>
+                <filter name="grp_account_analytic" string="Analytic Account" context="{'group_by':'analytic_account_id'}"/>
+                <filter name="grp_partner" string="Customer" context="{'group_by':'partner_id'}"/>
+                <filter name="grp_template" string="Template" context="{'group_by':'template_id'}"/>
+                <filter name="grp_date_start_year" string="Date Start by Year" context="{'group_by':'date_start:year'}"/>
+                <filter name="grp_date_start_month" string="Date Start by Month" context="{'group_by':'date_start:month'}"/>
+                <filter name="grp_date_start_week" string="Date Start by Week" context="{'group_by':'date_start:week'}"/>
+                <filter name="grp_date_start_day" string="Date Start by Day" context="{'group_by':'date_start:day'}"/>
+                <filter name="grp_date_end_year" string="Date End by Year" context="{'group_by':'date_end:year'}"/>
+                <filter name="grp_date_end_month" string="Date End by Month" context="{'group_by':'date_end:month'}"/>
+                <filter name="grp_date_end_week" string="Date End by Week" context="{'group_by':'date_end:week'}"/>
+                <filter name="grp_date_end_day" string="Date End by Day" context="{'group_by':'date_end:day'}"/>
             </group>
         </search>
     </field>
@@ -110,6 +124,7 @@
                         </group>
                         <field name="schedule_ids" nolabel="1">
                             <tree>
+                                <field name="period_start_date"/>
                                 <field name="schedule_date"/>
                                 <field name="invoice_id"/>
                                 <field name="contract_state" invisible="1"/>
@@ -126,6 +141,7 @@
                         <group name="invoice_item_1" colspan="4" col="2">
                             <field name="account_receivable_id"/>
                             <field name="journal_id"/>
+                            <field name="bank_account_id" domain="[('partner_id.ref_companies','in',[company_id])]"/>
                             <field name="payment_term_id"/>
                         </group>
                         <group name="invoice_item_2" colspan="4" col="2">

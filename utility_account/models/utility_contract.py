@@ -124,6 +124,16 @@ class UtilityContract(models.Model):
             ],
         },
     )
+    bank_account_id = fields.Many2one(
+        string="Bank Account",
+        comodel_name="res.partner.bank",
+        readonly=True,
+        states={
+            "draft": [
+                ("readonly", False),
+            ],
+        },
+    )
     journal_id = fields.Many2one(
         string="Journal",
         comodel_name="account.journal",
@@ -356,6 +366,41 @@ class UtilityContract(models.Model):
     def onchange_meter_id(self):
         self.meter_id = False
 
+    @api.onchange(
+        "template_id",
+        "company_id",
+    )
+    def onchange_bank_account_id(self):
+        self.bank_account_id = False
+        if self.template_id:
+            self.bank_account_id = self.template_id.default_bank_account_id
+
+    @api.onchange(
+        "template_id",
+    )
+    def onchange_journal_id(self):
+        self.journal_id = False
+        if self.template_id:
+            self.journal_id = self.template_id.default_journal_id
+
+    @api.onchange(
+        "template_id",
+    )
+    def onchange_receivable_account_id(self):
+        self.account_receivable_id = False
+        if self.template_id:
+            self.account_receivable_id = \
+                self.template_id.default_receivable_account_id
+
+    @api.onchange(
+        "template_id",
+    )
+    def onchange_payment_term_id(self):
+        self.payment_term_id = False
+        if self.template_id:
+            self.payment_term_id = \
+                self.template_id.default_payment_term_id
+
     @api.multi
     def action_confirm(self):
         for document in self:
@@ -480,12 +525,16 @@ class UtilityContract(models.Model):
         obj_schedule = self.env["utility.contract_invoice_schedule"]
         pd_schedule = self._get_schedule()
         dt_period = datetime.strptime(self.first_invoice_date, "%Y-%m-%d")
+        dt_period_date_start = datetime.strptime(
+            self.date_start, "%Y-%m-%d")
         offset = dt_period.day
         for period in range(0, self.period_number):
             obj_schedule.create({
                 "contract_id": self.id,
                 "schedule_date": dt_period.strftime("%Y-%m-%d"),
+                "period_start_date": dt_period_date_start.strftime("%Y-%m-%d"),
             })
+            dt_period_date_start = dt_period
             dt_period = pd_schedule[period] + pd.DateOffset(day=offset)
 
     @api.multi

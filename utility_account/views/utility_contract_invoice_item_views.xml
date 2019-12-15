@@ -77,10 +77,10 @@
 
 <menuitem
     id="utility_contract_invoice_item_menu"
-    name="Contract Invoice Items"
-    parent="utility_base.utility_configuration_menu"
+    name="Invoice Items"
+    parent="utility_contract_configuration_menu"
     action="utility_contract_invoice_item_action"
-    sequence="21"
+    sequence="2"
     />
 
 </data>
