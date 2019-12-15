@@ -83,7 +83,7 @@ class UtilityContractInvoiceLine(models.Model):
             self.tax_ids = self.item_id.product_id.taxes_id.ids
 
     @api.multi
-    def _prepare_invoice_line(self):
+    def _prepare_invoice_line(self, schedule):
         self.ensure_one()
         income_account = self._get_income_account()
         uom = self._get_uos()
@@ -93,9 +93,9 @@ class UtilityContractInvoiceLine(models.Model):
             "name": self.item_id.name,
             "product_id": self.item_id.product_id.id,
             "account_id": income_account and income_account.id or False,
-            "quantity": self._get_qty(),
+            "quantity": self._get_qty(schedule),
             "uos_id": uom and uom.id or False,
-            "price_unit": self._get_price_unit(),
+            "price_unit": self._get_price_unit(schedule),
             "invoice_line_tax_id": taxes,
             "account_analytic_id": analytic and analytic.id or False,
         }
@@ -121,16 +121,16 @@ class UtilityContractInvoiceLine(models.Model):
         return [(6, 0, self.tax_ids.ids)]
 
     @api.multi
-    def _get_qty(self):
+    def _get_qty(self, schedule):
         self.ensure_one()
         if self.qty_computation_method == "manual":
             result = self.qty
         else:
-            result = self.item_id._get_qty(self)
+            result = self.item_id._get_qty(self, schedule)
         return result
 
     @api.multi
-    def _get_price_unit(self):
+    def _get_price_unit(self, schedule):
         self.ensure_one()
         contract = self.contract_id
         product = self.item_id.product_id
@@ -140,5 +140,5 @@ class UtilityContractInvoiceLine(models.Model):
                 qty=self.qty or 1.0
             )[contract.pricelist_id.id]
         else:
-            result = self.item_id._get_unit_price(self)
+            result = self.item_id._get_unit_price(self, schedule)
         return result
