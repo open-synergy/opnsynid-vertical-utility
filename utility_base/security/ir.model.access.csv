@@ -1,11 +1,19 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 utility_type_employee,utility.type - user,model_utility_type,base.group_user,1,1,1,1
-utility_type_all,utility.type - all,model_utility_type,,0,0,0,0
+utility_type_all,utility.type - all,model_utility_type,,1,0,0,0
 utility_meter_employee,utility.meter - user,model_utility_meter,base.group_user,1,1,1,1
-utility_meter_all,utility.meter - all,model_utility_meter,,0,0,0,0
+utility_meter_all,utility.meter - all,model_utility_meter,,1,0,0,0
 utility_meter_reading_employee,utility.meter_reading - user,model_utility_meter_reading,base.group_user,1,1,1,1
-utility_meter_reading_all,utility.meter_reading - all,model_utility_meter_reading,,0,0,0,0
+utility_meter_reading_all,utility.meter_reading - all,model_utility_meter_reading,,1,0,0,0
 utility_meter_reading_worksheet_employee,utility.meter_reading_worksheet - user,model_utility_meter_reading_worksheet,base.group_user,1,1,1,1
-utility_meter_reading_worksheet_all,utility.meter_reading_worksheet - all,model_utility_meter_reading_worksheet,,0,0,0,0
+utility_meter_reading_worksheet_all,utility.meter_reading_worksheet - all,model_utility_meter_reading_worksheet,,1,0,0,0
 utility_meter_reading_worksheet_template_employee,utility.meter_reading_worksheet_template - user,model_utility_meter_reading_worksheet_template,base.group_user,1,1,1,1
-utility_meter_reading_worksheet_template_all,utility.meter_reading_worksheet_template - all,model_utility_meter_reading_worksheet_template,,0,0,0,0
+utility_meter_reading_worksheet_template_all,utility.meter_reading_worksheet_template - all,model_utility_meter_reading_worksheet_template,,1,0,0,0
+utility_meter_multiplier_employee,utility.meter_multiplier - user,model_utility_meter_multiplier,base.group_user,1,1,1,1
+utility_meter_multiplier_all,utility.meter_multiplier - all,model_utility_meter_multiplier,,1,0,0,0
+utility_meter_reading_multiplier_item_employee,utility.meter_reading_multiplier_item - user,model_utility_meter_reading_multiplier_item,base.group_user,1,1,1,1
+utility_meter_reading_multiplier_item_all,utility.meter_reading_multiplier_item - all,model_utility_meter_reading_multiplier_item,,1,0,0,0
+utility_meter_reading_multiplier_employee,utility.meter_reading_multiplier - user,model_utility_meter_reading_multiplier,base.group_user,1,1,1,1
+utility_meter_reading_multiplier_all,utility.meter_reading_multiplier - all,model_utility_meter_reading_multiplier,,1,0,0,0
+utility_type_multiplier_employee,utility.type_multiplier - user,model_utility_type_multiplier,base.group_user,1,1,1,1
+utility_type_multiplier_all,utility.type_multiplier - all,model_utility_type_multiplier,,1,0,0,0

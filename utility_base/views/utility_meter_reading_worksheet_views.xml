@@ -83,7 +83,7 @@
                 <button name="action_confirm" type="object" string="Confirm" class="oe_highlight" attrs="{'invisible':['|',('state','!=','draft'),('confirm_ok','=',False)]}" confirm="Confirm worksheet. Are you sure?"/>
                 <button name="action_approve" type="object" string="Approve" class="oe_highlight" attrs="{'invisible':['|',('state','!=','confirm'),('approve_ok','=',False)]}" confirm="Approve worksheet. Are you sure?"/>
                 <button name="%(utility_meter_reading_worksheet_start_action)d" type="action" string="Start" class="oe_highlight" attrs="{'invisible':['|',('state','!=','approve'),('start_ok','=',False)]}" confirm="Start worksheet. Are you sure?"/>
-                <button name="%(utility_meter_reading_worksheet_end_action)d" type="action" string="Finish" class="oe_highlight" attrs="{'invisible':['|',('state','!=','open'),('done_ok','=',False)]}" confirm="Finish worksheet. Are you sure?"/>                
+                <button name="%(utility_meter_reading_worksheet_end_action)d" type="action" string="Finish" class="oe_highlight" attrs="{'invisible':['|',('state','!=','open'),('done_ok','=',False)]}" confirm="Finish worksheet. Are you sure?"/>
                 <button name="%(base_print_policy.base_print_document_action)d" string="Print" type="action" icon="gtk-print"/>
                 <button name="%(base_cancel_reason.base_cancel_reason_wizard_action)d" type="action" string="Cancel" attrs="{'invisible':['|',('state','=','cancel'),('cancel_ok','=',False)]}" confirm="Cancel worksheet. Are you sure?"/>
                 <button name="action_restart" type="object" string="Restart" attrs="{'invisible':['|',('state','!=','cancel'),('restart_ok','=',False)]}" confirm="Restart worksheet. Are you sure?"/>
@@ -181,7 +181,7 @@
 
 <menuitem
     id="utility_meter_reading_worksheet_menu"
-    name="Meter Reading Worksheets"
+    name="Worksheets"
     parent="utility_meter_reading_root_menu"
     action="utility_meter_reading_worksheet_action"
     sequence="2"

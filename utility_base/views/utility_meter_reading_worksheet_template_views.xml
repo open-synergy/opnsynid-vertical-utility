@@ -22,6 +22,10 @@
         <tree>
             <field name="name"/>
             <field name="code"/>
+            <field name="worksheet_sequence_id"/>
+            <field name="default_user_id"/>
+            <field name="estimate_work_hour"/>
+            <field name="estimate_work_minute"/>
         </tree>
     </field>
 </record>
@@ -79,10 +83,10 @@
 
 <menuitem
     id="utility_meter_reading_worksheet_template_menu"
-    name="Meter Reading Worksheet Templates"
-    parent="utility_configuration_menu"
+    name="Worksheet Templates"
+    parent="utility_meter_reading_configuration_menu"
     action="utility_meter_reading_worksheet_template_action"
-    sequence="2"
+    sequence="1"
     />
 
 </data>

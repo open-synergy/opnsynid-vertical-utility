@@ -12,11 +12,23 @@ class UtilityMeter(models.Model):
 
     @api.multi
     @api.depends(
-        ("type_id")
+        "type_id",
     )
     def _compute_allowed_uom_ids(self):
         for document in self:
             document.allowed_uom_ids = document.type_id.allowed_uom_ids
+
+    @api.multi
+    @api.depends(
+        "type_id",
+    )
+    def _compute_allowed_multiplier_item_ids(self):
+        for document in self:
+            result = []
+        if document.type_id:
+            for multiplier in self.type_id.multiplier_ids:
+                result.append(multiplier.item_id.id)
+        document.allowed_multiplier_item_ids = result
 
     name = fields.Char(
         string="# Meter",
@@ -52,6 +64,17 @@ class UtilityMeter(models.Model):
         domain=[
             ("code", "=", "meter.reading"),
         ],
+    )
+    allowed_multiplier_item_ids = fields.Many2many(
+        string="Allowed Multipliers",
+        comodel_name="utility.meter_reading_multiplier_item",
+        compute="_compute_allowed_multiplier_item_ids",
+        store=False,
+    )
+    multiplier_ids = fields.One2many(
+        string="Multipliers",
+        comodel_name="utility.meter_multiplier",
+        inverse_name="meter_id",
     )
 
     @api.onchange(

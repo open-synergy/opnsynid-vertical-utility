@@ -3,8 +3,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 # pylint: disable=locally-disabled, manifest-required-author
 {
-    "name": "Utility Base",
-    "version": "8.0.1.1.0",
+    "name": "Utility Management",
+    "version": "8.0.1.2.0",
     "category": "Invoicing",
     "website": "https://opensynergy-indonesia.com",
     "author": "OpenSynergy Indonesia",
@@ -29,6 +29,7 @@
         "views/utility_type_views.xml",
         "views/utility_meter_views.xml",
         "views/utility_meter_reading_views.xml",
+        "views/utility_meter_reading_multiplier_item_views.xml",
         "views/utility_meter_reading_worksheet_template_views.xml",
         "views/utility_meter_reading_worksheet_views.xml",
     ],
