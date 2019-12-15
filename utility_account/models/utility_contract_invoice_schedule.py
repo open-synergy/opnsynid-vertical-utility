@@ -215,7 +215,7 @@ class UtilityContractInvoiceSchedule(models.Model):
         self.ensure_one()
         result = []
         for invoice_item in self.contract_id.invoice_item_ids:
-            result.append((0, 0, invoice_item._prepare_invoice_line()))
+            result.append((0, 0, invoice_item._prepare_invoice_line(self)))
         return result
 
     @api.multi

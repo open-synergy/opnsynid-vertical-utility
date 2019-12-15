@@ -69,17 +69,18 @@ class UtilityContractInvoiceItem(models.Model):
         string="Note",
     )
 
-    def _get_localdict(self, document):
+    def _get_localdict(self, document, schedule):
         self.ensure_one()
         return {
             "env": self.env,
             "document": document,
+            "schedule": schedule,
         }
 
     @api.multi
-    def _get_qty(self, document):
+    def _get_qty(self, document, schedule):
         self.ensure_one()
-        localdict = self._get_localdict(document)
+        localdict = self._get_localdict(document, schedule)
         try:
             eval(self.python_code_qty,
                  localdict, mode="exec", nocopy=True)
@@ -89,10 +90,10 @@ class UtilityContractInvoiceItem(models.Model):
         return result
 
     @api.multi
-    def _get_unit_price(self, document):
+    def _get_unit_price(self, document, schedule):
         self.ensure_one()
         result = 0.0
-        localdict = self._get_localdict(document)
+        localdict = self._get_localdict(document, schedule)
         try:
             eval(self.python_code_unit_price,
                  localdict, mode="exec", nocopy=True)
