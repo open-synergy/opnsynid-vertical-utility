@@ -77,7 +77,13 @@
                     <field name="contract_state"/>
                     <field name="manual"/>
                 </group>
-                <notebook/>
+                <notebook>
+                    <page name="meter_reading" string="Meter Readings">
+                        <group name="meter_reading_1" colspan="4" col="2">
+                            <field name="meter_reading_ids" colspan="4" col="2" readonly="1"/>
+                        </group>
+                    </page>
+                </notebook>
             </sheet>
         </form>
     </field>
