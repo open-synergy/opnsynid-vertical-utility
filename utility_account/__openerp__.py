@@ -4,7 +4,7 @@
 # pylint: disable=locally-disabled, manifest-required-author
 {
     "name": "Utility Management - Accounting Integration",
-    "version": "8.0.1.1.1",
+    "version": "8.0.1.2.0",
     "category": "Invoicing",
     "website": "https://opensynergy-indonesia.com",
     "author": "OpenSynergy Indonesia",
@@ -34,6 +34,7 @@
         "views/utility_contract_views.xml",
         "views/utility_contract_template_views.xml",
         "views/utility_meter_reading_views.xml",
+        "views/utility_contract_invoice_schedule_views.xml",
 
     ],
 }
