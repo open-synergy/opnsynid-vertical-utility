@@ -49,8 +49,8 @@
             <field name="manual"/>
             <field name="state"/>
             <button name="action_uncontrol_schedule" string="Uncontrol Schedule" icon="gtk-no" type="object" attrs="{'invisible':['|','|',('invoice_id','!=',False),('manual','=',True),('contract_state','!=','open')]}"/>
-            <button name="action_control_schedule" string="Control Schedule" icon="gtk-yes" type="object" attrs="{'invisible':['|',('manual','=',False),('contract_state','!=','open')]}"/>
-            <button name="action_generate_invoice" string="Generate Invoice" icon="gtk-execute" type="object" attrs="{'invisible':['|',('invoice_id','!=',False),('contract_state','!=','open')]}"/>
+            <button name="action_control_schedule" string="Control Schedule" icon="gtk-yes" type="object" attrs="{'invisible':['|','|',('invoice_id','!=',False),('manual','=',False),('contract_state','!=','open')]}"/>
+            <button name="action_generate_invoice" string="Generate Invoice" icon="gtk-execute" type="object" attrs="{'invisible':['|','|',('invoice_id','!=',False),('contract_state','!=','open'),('manual','!=',False)]}"/>
             <button name="%(base_print_policy.base_print_document_action)d" string="Print" type="action" icon="gtk-print"/>
         </tree>
     </field>
