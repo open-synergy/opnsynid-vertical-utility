@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-# Copyright 2019 OpenSynergy Indonesia
+# Copyright 2019-2020 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 # pylint: disable=locally-disabled, manifest-required-author
 {
     "name": "Utility Management - Accounting Integration",
-    "version": "8.0.1.4.0",
+    "version": "8.0.1.5.0",
     "category": "Invoicing",
     "website": "https://opensynergy-indonesia.com",
     "author": "OpenSynergy Indonesia",

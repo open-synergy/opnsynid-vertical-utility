@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2019 OpenSynergy Indonesia
+# Copyright 2019-2020 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from openerp import models, fields, api, _
@@ -109,6 +109,11 @@ class UtilityContractInvoiceSchedule(models.Model):
             document._generate_invoice()
 
     @api.multi
+    def action_reset_invoice(self):
+        for document in self:
+            document._reset_invoice()
+
+    @api.multi
     def action_uncontrol_schedule(self):
         for document in self:
             document.write(document._prepare_uncontrol_schedule())
@@ -136,6 +141,20 @@ class UtilityContractInvoiceSchedule(models.Model):
     def _generate_invoice(self):
         self.ensure_one()
         self.write(self._prepare_generate_invoice_data())
+
+    @api.multi
+    def _reset_invoice(self):
+        self.ensure_one()
+        inv = self.invoice_id
+        self.write(self._prepare_reset_invoice_data())
+        inv.unlink()
+
+    @api.multi
+    def _prepare_reset_invoice_data(self):
+        self.ensure_one()
+        return {
+            "invoice_id": False,
+        }
 
     @api.multi
     def _prepare_generate_invoice_data(self):
@@ -168,7 +187,7 @@ class UtilityContractInvoiceSchedule(models.Model):
             "journal_id": journal and journal.id or False,
             "account_id": account and account.id or False,
             "date_invoice": self.schedule_date,
-            "payment_term_id": payment_term and payment_term.id or False,
+            "payment_term": payment_term and payment_term.id or False,
             "invoice_line": lines,
             "name": template._get_invoice_description(self),
             "partner_bank_id": bank and bank.id or False,
