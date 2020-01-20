@@ -250,7 +250,8 @@ class UtilityContractInvoiceSchedule(models.Model):
         date_max = self.schedule_date + " 00:00:00"
         return [
             ("schedule_id", "=", False),
-            ("date_reading_tz", "<=", date_max)
+            ("date_reading_tz", "<=", date_max),
+            ("meter_id", "=", self.meter_id.id),
         ]
 
     @api.multi
