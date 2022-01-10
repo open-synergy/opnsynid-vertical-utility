@@ -2,7 +2,7 @@
 # Copyright 2019 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api
+from openerp import api, fields, models
 
 
 class UtilityMeterMultiplier(models.Model):
@@ -35,11 +35,15 @@ class UtilityMeterMultiplier(models.Model):
     @api.multi
     def _generate_multiplier(self):
         self.ensure_one()
-        return (0, 0, {
-            "item_id": self.item_id.id,
-            "sequence": self.sequence,
-            "multiplier": self.multiplier,
-        })
+        return (
+            0,
+            0,
+            {
+                "item_id": self.item_id.id,
+                "sequence": self.sequence,
+                "multiplier": self.multiplier,
+            },
+        )
 
     @api.onchange(
         "item_id",
@@ -50,7 +54,7 @@ class UtilityMeterMultiplier(models.Model):
         if self.item_id:
             criteria = [
                 ("type_id", "=", self.meter_id.type_id.id),
-                ("item_id", "=", self.item_id.id)
+                ("item_id", "=", self.item_id.id),
             ]
             multipliers = obj_multiplier.search(criteria)
             if len(multipliers) > 0:

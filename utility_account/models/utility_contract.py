@@ -2,10 +2,11 @@
 # Copyright 2019 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from datetime import datetime
-from openerp import models, fields, api, _
-from openerp.exceptions import Warning as UserError
 import logging
+from datetime import datetime
+
+from openerp import _, api, fields, models
+from openerp.exceptions import Warning as UserError
 
 _logger = logging.getLogger(__name__)
 
@@ -389,8 +390,7 @@ class UtilityContract(models.Model):
     def onchange_receivable_account_id(self):
         self.account_receivable_id = False
         if self.template_id:
-            self.account_receivable_id = \
-                self.template_id.default_receivable_account_id
+            self.account_receivable_id = self.template_id.default_receivable_account_id
 
     @api.onchange(
         "template_id",
@@ -398,8 +398,7 @@ class UtilityContract(models.Model):
     def onchange_payment_term_id(self):
         self.payment_term_id = False
         if self.template_id:
-            self.payment_term_id = \
-                self.template_id.default_payment_term_id
+            self.payment_term_id = self.template_id.default_payment_term_id
 
     @api.multi
     def action_confirm(self):
@@ -525,15 +524,16 @@ class UtilityContract(models.Model):
         obj_schedule = self.env["utility.contract_invoice_schedule"]
         pd_schedule = self._get_schedule()
         dt_period = datetime.strptime(self.first_invoice_date, "%Y-%m-%d")
-        dt_period_date_start = datetime.strptime(
-            self.date_start, "%Y-%m-%d")
+        dt_period_date_start = datetime.strptime(self.date_start, "%Y-%m-%d")
         offset = dt_period.day
         for period in range(0, self.period_number):
-            obj_schedule.create({
-                "contract_id": self.id,
-                "schedule_date": dt_period.strftime("%Y-%m-%d"),
-                "period_start_date": dt_period_date_start.strftime("%Y-%m-%d"),
-            })
+            obj_schedule.create(
+                {
+                    "contract_id": self.id,
+                    "schedule_date": dt_period.strftime("%Y-%m-%d"),
+                    "period_start_date": dt_period_date_start.strftime("%Y-%m-%d"),
+                }
+            )
             dt_period_date_start = dt_period
             dt_period = pd_schedule[period] + pd.DateOffset(day=offset)
 
@@ -572,32 +572,24 @@ class UtilityContract(models.Model):
         _super = super(UtilityContract, self)
         result = _super.create(values)
         sequence = result._create_sequence()
-        result.write({
-            "name": sequence,
-        })
+        result.write(
+            {
+                "name": sequence,
+            }
+        )
         return result
 
-    @api.constrains(
-        "date_start",
-        "date_end"
-    )
+    @api.constrains("date_start", "date_end")
     def _check_real_date(self):
-        strWarning = _(
-            "Date End must be "
-            "greater than Date Start")
+        strWarning = _("Date End must be " "greater than Date Start")
         for document in self:
             if document.date_start and document.date_end:
                 if document.date_start > document.date_end:
                     raise UserError(strWarning)
 
-    @api.constrains(
-        "date_start",
-        "first_invoice_date"
-    )
+    @api.constrains("date_start", "first_invoice_date")
     def _check_first_invoice_date(self):
-        strWarning = _(
-            "First Invoice Date must be "
-            "greater than Date Start")
+        strWarning = _("First Invoice Date must be " "greater than Date Start")
         for document in self:
             if document.date_start and document.first_invoice_date:
                 if document.date_start > document.first_invoice_date:
@@ -608,13 +600,14 @@ class UtilityContract(models.Model):
         "last_invoice_date",
         "state",
     )
-    def _check_first_invoice_date(self):
-        strWarning = _(
-            "Last Invoice Date must be "
-            "greater or equal than Date End")
+    def _check_last_invoice_date(self):
+        strWarning = _("Last Invoice Date must be " "greater or equal than Date End")
         for document in self:
-            if document.date_end and document.last_invoice_date and \
-                    document.state != "draft":
+            if (
+                document.date_end
+                and document.last_invoice_date
+                and document.state != "draft"
+            ):
                 if document.date_end > document.last_invoice_date:
                     raise UserError(strWarning)
 
@@ -635,8 +628,7 @@ class UtilityContract(models.Model):
     def _check_invoice_line(self):
         warning_msg = _("Please create invoice line")
         for document in self:
-            if document.state != "draft" and \
-                    len(document.invoice_item_ids) == 0:
+            if document.state != "draft" and len(document.invoice_item_ids) == 0:
                 raise UserError(warning_msg)
 
     @api.constrains(

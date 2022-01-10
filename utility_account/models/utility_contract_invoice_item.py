@@ -2,8 +2,8 @@
 # Copyright 2019 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api
-from openerp.tools.safe_eval import safe_eval as eval
+from openerp import api, fields, models
+from openerp.tools.safe_eval import safe_eval as eval  # pylint: disable=W0622
 
 
 class UtilityContractInvoiceItem(models.Model):
@@ -82,8 +82,7 @@ class UtilityContractInvoiceItem(models.Model):
         self.ensure_one()
         localdict = self._get_localdict(document, schedule)
         try:
-            eval(self.python_code_qty,
-                 localdict, mode="exec", nocopy=True)
+            eval(self.python_code_qty, localdict, mode="exec", nocopy=True)
             result = localdict["result"]
         except:  # noqa: E722
             result = 0.0
@@ -95,8 +94,7 @@ class UtilityContractInvoiceItem(models.Model):
         result = 0.0
         localdict = self._get_localdict(document, schedule)
         try:
-            eval(self.python_code_unit_price,
-                 localdict, mode="exec", nocopy=True)
+            eval(self.python_code_unit_price, localdict, mode="exec", nocopy=True)
             result = localdict["result"]
         except:  # noqa: E722
             result = 0.0

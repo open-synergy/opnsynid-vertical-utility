@@ -3,7 +3,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from datetime import datetime
-from openerp import models, fields, api, _
+
+from openerp import _, api, fields, models
 from openerp.exceptions import Warning as UserError
 from pytz import timezone
 
@@ -27,8 +28,7 @@ class UtilityMeterReading(models.Model):
             document.previous_reading_id = False
             if document.date_reading:
                 prev_reading = document._get_previous_reading()
-                document.previous_reading_id = prev_reading and \
-                    prev_reading.id or False
+                document.previous_reading_id = prev_reading and prev_reading.id or False
 
     @api.multi
     @api.depends(
@@ -41,13 +41,13 @@ class UtilityMeterReading(models.Model):
             if document.meter_id and document.date_reading:
                 tz = document._get_tz()
                 date_reading = datetime.strptime(
-                    document.date_reading, "%Y-%m-%d %H:%M:%S")
+                    document.date_reading, "%Y-%m-%d %H:%M:%S"
+                )
                 date_reading = timezone("UTC").localize(date_reading)
                 date_reading = date_reading.astimezone(timezone(tz))
                 # TODO: Not sure this is the right syntax
                 date_reading = date_reading.replace(tzinfo=None)
-                document.date_reading_tz = date_reading.strftime(
-                    "%Y-%m-%d %H:%M:%S")
+                document.date_reading_tz = date_reading.strftime("%Y-%m-%d %H:%M:%S")
 
     @api.multi
     @api.depends(
@@ -60,8 +60,9 @@ class UtilityMeterReading(models.Model):
             document.amount_usage = 0.0
             if document.previous_reading_id:
                 prev_reading = document.previous_reading_id
-                document.amount_usage = document.amount_reading - \
-                    prev_reading.amount_reading
+                document.amount_usage = (
+                    document.amount_reading - prev_reading.amount_reading
+                )
 
     @api.multi
     @api.depends(
@@ -257,9 +258,11 @@ class UtilityMeterReading(models.Model):
         _super = super(UtilityMeterReading, self)
         result = _super.create(values)
         sequence = result._create_sequence()
-        result.write({
-            "name": sequence,
-        })
+        result.write(
+            {
+                "name": sequence,
+            }
+        )
         return result
 
     @api.constrains(
@@ -298,6 +301,8 @@ class UtilityMeterReading(models.Model):
         result = []
         for multiplier in self.meter_id.multiplier_ids:
             result.append(multiplier._generate_multiplier())
-        self.write({
-            "multiplier_ids": result,
-        })
+        self.write(
+            {
+                "multiplier_ids": result,
+            }
+        )

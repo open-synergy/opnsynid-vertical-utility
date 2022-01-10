@@ -1,18 +1,17 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2019 OpenSynergy Indonesia
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
-
 <openerp>
 <data>
 
 <record id="utility_meter_reading_view_form" model="ir.ui.view">
     <field name="name">utility.meter_reading form</field>
     <field name="model">utility.meter_reading</field>
-    <field name="inherit_id" ref="utility_base.utility_meter_reading_view_form"/>
+    <field name="inherit_id" ref="utility_base.utility_meter_reading_view_form" />
     <field name="arch" type="xml">
         <data>
             <xpath expr="//field[@name='date_reading_tz']" position="after">
-                <field name="schedule_id" invisible="1"/>
+                <field name="schedule_id" invisible="1" />
             </xpath>
         </data>
     </field>

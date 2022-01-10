@@ -6,7 +6,7 @@
     "name": "Utility Management - Accounting Integration",
     "version": "8.0.1.5.1",
     "category": "Invoicing",
-    "website": "https://opensynergy-indonesia.com",
+    "website": "https://simetri-sinergi.id",
     "author": "OpenSynergy Indonesia",
     "license": "AGPL-3",
     "installable": True,
@@ -35,6 +35,5 @@
         "views/utility_contract_template_views.xml",
         "views/utility_meter_reading_views.xml",
         "views/utility_contract_invoice_schedule_views.xml",
-
     ],
 }

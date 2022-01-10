@@ -1,43 +1,38 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2019 OpenSynergy Indonesia
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
-
 <openerp>
 <data>
 
-<menuitem
-    id="utility_root_menu"
-    name="Utility"
-    sequence="30"
-    />
+<menuitem id="utility_root_menu" name="Utility" sequence="30" />
 
 <menuitem
-    id="utility_meter_reading_root_menu"
-    name="Meter Reading"
-    parent="utility_root_menu"
-    sequence="1"
-    />
+            id="utility_meter_reading_root_menu"
+            name="Meter Reading"
+            parent="utility_root_menu"
+            sequence="1"
+        />
 
 <menuitem
-    id="utility_report_menu"
-    name="Report"
-    parent="utility_root_menu"
-    sequence="98"
-    />
+            id="utility_report_menu"
+            name="Report"
+            parent="utility_root_menu"
+            sequence="98"
+        />
 
 <menuitem
-    id="utility_configuration_menu"
-    name="Configuration"
-    parent="utility_root_menu"
-    sequence="99"
-    />
+            id="utility_configuration_menu"
+            name="Configuration"
+            parent="utility_root_menu"
+            sequence="99"
+        />
 
 <menuitem
-    id="utility_meter_reading_configuration_menu"
-    name="Meter Reading"
-    parent="utility_configuration_menu"
-    sequence="100"
-    />
+            id="utility_meter_reading_configuration_menu"
+            name="Meter Reading"
+            parent="utility_configuration_menu"
+            sequence="100"
+        />
 
 </data>
 </openerp>

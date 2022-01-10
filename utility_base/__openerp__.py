@@ -6,7 +6,7 @@
     "name": "Utility Management",
     "version": "8.0.1.2.0",
     "category": "Invoicing",
-    "website": "https://opensynergy-indonesia.com",
+    "website": "https://simetri-sinergi.id",
     "author": "OpenSynergy Indonesia",
     "license": "AGPL-3",
     "installable": True,
