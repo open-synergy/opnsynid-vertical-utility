@@ -1,11 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2019 OpenSynergy Indonesia
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
-
 <openerp>
     <data>
-        <record id="base_terminate_reason_config_utility_contract" model="base.terminate.reason_config">
-            <field name="name" ref="utility_account.model_utility_contract"/>
+        <record
+            id="base_terminate_reason_config_utility_contract"
+            model="base.terminate.reason_config"
+        >
+            <field name="name" ref="utility_account.model_utility_contract" />
             <field name="method_terminate_name">action_terminate</field>
         </record>
     </data>

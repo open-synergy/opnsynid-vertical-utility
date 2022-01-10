@@ -2,7 +2,7 @@
 # Copyright 2019 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api
+from openerp import api, fields, models
 
 
 class UtilityContractInvoiceLine(models.Model):
@@ -18,8 +18,9 @@ class UtilityContractInvoiceLine(models.Model):
         for document in self:
             document.allowed_invoice_item_ids = False
             if document.contract_id:
-                document.allowed_invoice_item_ids = document.\
-                    contract_id.meter_id.type_id.allowed_invoice_item_ids.ids
+                document.allowed_invoice_item_ids = (
+                    document.contract_id.meter_id.type_id.allowed_invoice_item_ids.ids
+                )
 
     @api.multi
     @api.depends(
@@ -29,8 +30,9 @@ class UtilityContractInvoiceLine(models.Model):
         for document in self:
             document.qty_computation_method = False
             if document.item_id:
-                document.qty_computation_method = document.\
-                    item_id.qty_computation_method
+                document.qty_computation_method = (
+                    document.item_id.qty_computation_method
+                )
 
     contract_id = fields.Many2one(
         string="# Contract",
@@ -71,7 +73,6 @@ class UtilityContractInvoiceLine(models.Model):
         relation="rel_contract_line_2_tax",
         column1="line_id",
         column2="tax_id",
-
     )
 
     @api.onchange(
@@ -136,8 +137,7 @@ class UtilityContractInvoiceLine(models.Model):
         product = self.item_id.product_id
         if self.item_id.unit_price_computation_method == "default":
             result = contract.pricelist_id.price_get(
-                prod_id=product.id,
-                qty=self.qty or 1.0
+                prod_id=product.id, qty=self.qty or 1.0
             )[contract.pricelist_id.id]
         else:
             result = self.item_id._get_unit_price(self, schedule)

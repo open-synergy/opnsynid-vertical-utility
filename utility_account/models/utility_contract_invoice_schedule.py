@@ -2,7 +2,7 @@
 # Copyright 2019-2020 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api, _
+from openerp import _, api, fields, models
 from openerp.exceptions import Warning as UserError
 
 
@@ -160,9 +160,7 @@ class UtilityContractInvoiceSchedule(models.Model):
     def _prepare_generate_invoice_data(self):
         self.ensure_one()
         invoice = self._create_invoice()
-        return {
-            "invoice_id": invoice.id
-        }
+        return {"invoice_id": invoice.id}
 
     @api.multi
     def _create_invoice(self):

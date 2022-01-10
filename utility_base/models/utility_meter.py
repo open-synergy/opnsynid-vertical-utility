@@ -2,7 +2,7 @@
 # Copyright 2019 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api
+from openerp import api, fields, models
 from openerp.addons.base.res.res_partner import _tz_get
 
 
@@ -25,10 +25,10 @@ class UtilityMeter(models.Model):
     def _compute_allowed_multiplier_item_ids(self):
         for document in self:
             result = []
-        if document.type_id:
-            for multiplier in self.type_id.multiplier_ids:
-                result.append(multiplier.item_id.id)
-        document.allowed_multiplier_item_ids = result
+            if document.type_id:
+                for multiplier in self.type_id.multiplier_ids:
+                    result.append(multiplier.item_id.id)
+            document.allowed_multiplier_item_ids = result
 
     name = fields.Char(
         string="# Meter",

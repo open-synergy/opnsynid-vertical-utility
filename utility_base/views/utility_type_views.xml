@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2019 OpenSynergy Indonesia
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
-
 <openerp>
 <data>
 <record id="utility_type_view_search" model="ir.ui.view">
@@ -9,9 +8,9 @@
     <field name="model">utility.type</field>
     <field name="arch" type="xml">
         <search>
-            <field name="name"/>
-            <field name="code"/>
-            <field name="uom_category_id"/>
+            <field name="name" />
+            <field name="code" />
+            <field name="uom_category_id" />
         </search>
     </field>
 </record>
@@ -21,9 +20,9 @@
     <field name="model">utility.type</field>
     <field name="arch" type="xml">
         <tree>
-            <field name="name"/>
-            <field name="code"/>
-            <field name="uom_category_id"/>
+            <field name="name" />
+            <field name="code" />
+            <field name="uom_category_id" />
         </tree>
     </field>
 </record>
@@ -33,31 +32,47 @@
     <field name="model">utility.type</field>
     <field name="arch" type="xml">
         <form>
-            <header/>
+            <header />
             <sheet>
-                <div class="oe_right oe_button_box" style="width: 300px;" name="buttons"/>
+                <div
+                            class="oe_right oe_button_box"
+                            style="width: 300px;"
+                            name="buttons"
+                        />
                 <group name="group_1" colspan="4" col="2">
-                    <field name="name"/>
-                    <field name="code"/>
-                    <field name="active"/>
+                    <field name="name" />
+                    <field name="code" />
+                    <field name="active" />
                 </group>
                 <notebook>
                     <page name="uom" string="UoM">
                         <group name="uom_1" colspan="4" col="2">
-                            <field name="uom_category_id"/>
-                            <field name="allowed_uom_ids" domain="[('category_id','=',uom_category_id)]" widget="many2many_tags"/>
+                            <field name="uom_category_id" />
+                            <field
+                                        name="allowed_uom_ids"
+                                        domain="[('category_id','=',uom_category_id)]"
+                                        widget="many2many_tags"
+                                    />
                         </group>
                     </page>
                     <page name="multiplier" string="Multiplier">
                         <group name="multiplier_1" colspan="4" col="2">
-                            <field name="allowed_multiplier_item_ids" colspan="2" invisible="1" widget="many2many_tags"/>
+                            <field
+                                        name="allowed_multiplier_item_ids"
+                                        colspan="2"
+                                        invisible="1"
+                                        widget="many2many_tags"
+                                    />
                         </group>
                         <group name="multiplier_2" colspan="4" col="2">
                             <field name="multiplier_ids" colspan="2" nolabel="1">
                                 <tree editable="bottom">
-                                    <field name="sequence" widget="handle"/>
-                                    <field name="item_id" domain="[('id','in',parent.allowed_multiplier_item_ids[0][2])]"/>
-                                    <field name="multiplier"/>
+                                    <field name="sequence" widget="handle" />
+                                    <field
+                                                name="item_id"
+                                                domain="[('id','in',parent.allowed_multiplier_item_ids[0][2])]"
+                                            />
+                                    <field name="multiplier" />
                                 </tree>
                             </field>
                         </group>
@@ -77,12 +92,12 @@
 </record>
 
 <menuitem
-    id="utility_type_menu"
-    name="Utility Types"
-    parent="utility_configuration_menu"
-    action="utility_type_action"
-    sequence="1"
-    />
+            id="utility_type_menu"
+            name="Utility Types"
+            parent="utility_configuration_menu"
+            action="utility_type_action"
+            sequence="1"
+        />
 
 </data>
 </openerp>

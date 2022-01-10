@@ -2,9 +2,10 @@
 # Copyright 2019 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from dateutil import relativedelta
 from datetime import datetime
-from openerp import models, fields, api, _
+
+from dateutil import relativedelta
+from openerp import _, api, fields, models
 from openerp.exceptions import Warning as UserError
 
 
@@ -212,26 +213,16 @@ Change / to assign document number manually.
         readonly=True,
     )
 
-    @api.constrains(
-        "scheduled_date_start",
-        "scheduled_date_end"
-    )
+    @api.constrains("scheduled_date_start", "scheduled_date_end")
     def _check_scheduled_date(self):
-        strWarning = _(
-            "Scheduled date end must be "
-            "greater than scheduled date end")
+        strWarning = _("Scheduled date end must be " "greater than scheduled date end")
         if self.scheduled_date_start and self.scheduled_date_end:
             if self.scheduled_date_start >= self.scheduled_date_end:
                 raise UserError(strWarning)
 
-    @api.constrains(
-        "real_date_start",
-        "real_date_end"
-    )
+    @api.constrains("real_date_start", "real_date_end")
     def _check_real_date(self):
-        strWarning = _(
-            "Real date end must be "
-            "greater than real date end")
+        strWarning = _("Real date end must be " "greater than real date end")
         if self.real_date_start and self.real_date_end:
             if self.real_date_start >= self.real_date_end:
                 raise UserError(strWarning)
@@ -345,13 +336,20 @@ Change / to assign document number manually.
         worksheet_meters = self._get_existing_meters()
         meters_to_add = template_meters - worksheet_meters
         for meter in meters_to_add:
-            result.append((0, 0, {
-                "worksheet_id": self.id,
-                "meter_id": meter.id,
-            }))
+            result.append(
+                (
+                    0,
+                    0,
+                    {
+                        "worksheet_id": self.id,
+                        "meter_id": meter.id,
+                    },
+                )
+            )
         meters_to_remove = worksheet_meters - template_meters
         self.meter_reading_ids.filtered(
-            lambda r: r.meter_id.id in meters_to_remove.ids).unlink()
+            lambda r: r.meter_id.id in meters_to_remove.ids
+        ).unlink()
         return result
 
     @api.multi
@@ -367,9 +365,11 @@ Change / to assign document number manually.
         _super = super(UtilityMeterReadingWorksheet, self)
         result = _super.create(values)
         sequence = result._create_sequence()
-        result.write({
-            "name": sequence,
-        })
+        result.write(
+            {
+                "name": sequence,
+            }
+        )
         return result
 
     @api.onchange(
@@ -386,12 +386,11 @@ Change / to assign document number manually.
     def onchange_schedule_date_end(self):
         self.scheduled_date_end = False
         if self.template_id:
-            dt_start = datetime.strptime(
-                self.scheduled_date_start,
-                "%Y-%m-%d %H:%M:%S")
+            dt_start = datetime.strptime(self.scheduled_date_start, "%Y-%m-%d %H:%M:%S")
             dt_end = dt_start + relativedelta.relativedelta(
                 hours=self.template_id.estimate_work_hour,
-                minutes=self.template_id.estimate_work_minute)
+                minutes=self.template_id.estimate_work_minute,
+            )
             self.scheduled_date_end = dt_end.strftime("%Y-%m-%d %H:%M:%S")
 
     @api.multi

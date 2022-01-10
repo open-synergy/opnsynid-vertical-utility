@@ -2,8 +2,8 @@
 # Copyright 2019 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api
-from openerp.tools.safe_eval import safe_eval as eval
+from openerp import api, fields, models
+from openerp.tools.safe_eval import safe_eval as eval  # pylint: disable=W0622
 
 
 class UtilityContractTemplate(models.Model):
@@ -58,7 +58,7 @@ document.contract_id.name,
 document.period_start_date,
 document.schedule_date,
 )
-"""
+""",
     )
     contract_confirm_grp_ids = fields.Many2many(
         string="Allow To Confirm Contract",
@@ -125,8 +125,12 @@ document.schedule_date,
         self.ensure_one()
         localdict = self._get_localdict(document)
         try:
-            eval(self.python_code_invoice_description,
-                 localdict, mode="exec", nocopy=True)
+            eval(
+                self.python_code_invoice_description,
+                localdict,
+                mode="exec",
+                nocopy=True,
+            )
             result = localdict["result"]
         except:  # noqa: E722
             result = "/"

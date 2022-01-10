@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2019 OpenSynergy Indonesia
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
-
 <openerp>
 <data>
 <record id="utility_meter_reading_view_search" model="ir.ui.view">
@@ -9,18 +8,42 @@
     <field name="model">utility.meter_reading</field>
     <field name="arch" type="xml">
         <search>
-            <field name="name"/>
-            <field name="meter_id"/>
-            <field name="worksheet_id"/>
-            <field name="uom_id"/>
-            <field name="date_reading"/>
+            <field name="name" />
+            <field name="meter_id" />
+            <field name="worksheet_id" />
+            <field name="uom_id" />
+            <field name="date_reading" />
             <group name="group" string="Group By..">
-                <filter name="grp_meter" string="Meter" context="{'group_by':'meter_id'}"/>
-                <filter name="grp_worksheet" string="# Worksheet" context="{'group_by':'worksheet_id'}"/>
-                <filter name="grp_date_reading_year" string="Date Reading By Year" context="{'group_by':'date_reading:year'}"/>
-                <filter name="grp_date_reading_month" string="Date Reading By Month" context="{'group_by':'date_reading:month'}"/>
-                <filter name="grp_date_reading_week" string="Date Reading By Week" context="{'group_by':'date_reading:week'}"/>
-                <filter name="grp_date_reading_day" string="Date Reading By Day" context="{'group_by':'date_reading:day'}"/>
+                <filter
+                            name="grp_meter"
+                            string="Meter"
+                            context="{'group_by':'meter_id'}"
+                        />
+                <filter
+                            name="grp_worksheet"
+                            string="# Worksheet"
+                            context="{'group_by':'worksheet_id'}"
+                        />
+                <filter
+                            name="grp_date_reading_year"
+                            string="Date Reading By Year"
+                            context="{'group_by':'date_reading:year'}"
+                        />
+                <filter
+                            name="grp_date_reading_month"
+                            string="Date Reading By Month"
+                            context="{'group_by':'date_reading:month'}"
+                        />
+                <filter
+                            name="grp_date_reading_week"
+                            string="Date Reading By Week"
+                            context="{'group_by':'date_reading:week'}"
+                        />
+                <filter
+                            name="grp_date_reading_day"
+                            string="Date Reading By Day"
+                            context="{'group_by':'date_reading:day'}"
+                        />
             </group>
         </search>
     </field>
@@ -31,17 +54,35 @@
     <field name="model">utility.meter_reading</field>
     <field name="arch" type="xml">
         <tree>
-            <field name="name"/>
-            <field name="meter_id"/>
-            <field name="worksheet_id"/>
-            <field name="date_reading"/>
-            <field name="amount_reading"/>
-            <field name="amount_usage"/>
-            <field name="uom_id"/>
-            <field name="state"/>
-            <button name="action_valid" string="Valid" type="object" icon="gtk-apply" attrs="{'invisible':[('state','!=','draft')]}"/>
-            <button name="action_recompute" string="Recompute" type="object" icon="gtk-execute" attrs="{'invisible':[('state','!=','draft')]}"/>
-            <button name="action_draft" string="Reset to Draft" type="object" icon="gtk-cancel"  attrs="{'invisible':[('state','!=','valid')]}"/>
+            <field name="name" />
+            <field name="meter_id" />
+            <field name="worksheet_id" />
+            <field name="date_reading" />
+            <field name="amount_reading" />
+            <field name="amount_usage" />
+            <field name="uom_id" />
+            <field name="state" />
+            <button
+                        name="action_valid"
+                        string="Valid"
+                        type="object"
+                        icon="gtk-apply"
+                        attrs="{'invisible':[('state','!=','draft')]}"
+                    />
+            <button
+                        name="action_recompute"
+                        string="Recompute"
+                        type="object"
+                        icon="gtk-execute"
+                        attrs="{'invisible':[('state','!=','draft')]}"
+                    />
+            <button
+                        name="action_draft"
+                        string="Reset to Draft"
+                        type="object"
+                        icon="gtk-cancel"
+                        attrs="{'invisible':[('state','!=','valid')]}"
+                    />
         </tree>
     </field>
 </record>
@@ -52,50 +93,71 @@
     <field name="arch" type="xml">
         <form>
             <header>
-                <button name="action_valid" string="Valid" type="object" class="oe_highlight" attrs="{'invisible':[('state','!=','draft')]}"/>
-                <button name="action_recompute" string="Recompute" type="object" icon="gtk-execute" attrs="{'invisible':[('state','!=','draft')]}"/>
-                <button name="action_draft" string="Reset to Draft" type="object" attrs="{'invisible':[('state','!=','valid')]}"/>
-                <field name="state" widget="statusbar"/>
+                <button
+                            name="action_valid"
+                            string="Valid"
+                            type="object"
+                            class="oe_highlight"
+                            attrs="{'invisible':[('state','!=','draft')]}"
+                        />
+                <button
+                            name="action_recompute"
+                            string="Recompute"
+                            type="object"
+                            icon="gtk-execute"
+                            attrs="{'invisible':[('state','!=','draft')]}"
+                        />
+                <button
+                            name="action_draft"
+                            string="Reset to Draft"
+                            type="object"
+                            attrs="{'invisible':[('state','!=','valid')]}"
+                        />
+                <field name="state" widget="statusbar" />
             </header>
             <sheet>
-                <div class="oe_right oe_button_box" style="width: 300px;" name="buttons">
+                <div
+                            class="oe_right oe_button_box"
+                            style="width: 300px;"
+                            name="buttons"
+                        >
                 </div>
                 <div class="oe_left" style="width: 500px;">
                     <div class="oe_title" style="width: 500px;">
-                        <label for="name"/>
+                        <label for="name" />
                         <h1>
-                            <field name="name"/>
+                            <field name="name" />
                         </h1>
                     </div>
                 </div>
                 <group name="group_1" colspan="4" col="2">
-                    <field name="meter_id"/>
-                    <field name="worksheet_id" readonly="1"/>
+                    <field name="meter_id" />
+                    <field name="worksheet_id" readonly="1" />
                 </group>
                 <notebook>
                     <page name="reading" string="Readings">
                         <group name="reading_1" colspan="4" col="2">
-                            <field name="date_reading"/>
-                            <field name="date_reading_tz" invisible="1"/>
-                            <field name="amount_reading"/>
-                            <field name="previous_reading_id"/>
-                            <field name="amount_usage"/>
-                            <field name="uom_id"/>
+                            <field name="date_reading" />
+                            <field name="date_reading_tz" invisible="1" />
+                            <field name="amount_reading" />
+                            <field name="previous_reading_id" />
+                            <field name="amount_usage" />
+                            <field name="uom_id" />
                         </group>
                     </page>
                     <page name="multiplier" string="Multipliers">
                         <group name="multiplier_1" colspan="4" col="2">
                             <field name="multiplier_ids" colspan="2" nolabel="1">
                                 <tree>
-                                    <field name="sequence" widget="handle"/>
-                                    <field name="item_id"/>
-                                    <field name="multiplier"/>
+                                    <field name="sequence" widget="handle" />
+                                    <field name="item_id" />
+                                    <field name="multiplier" />
                                 </tree>
                             </field>
                         </group>
                         <group name="multiplier_2" colspan="4" col="2">
-                            <field name="amount_reading_multiplier"/>
-                            <field name="amount_usage_multiplier"/>
+                            <field name="amount_reading_multiplier" />
+                            <field name="amount_usage_multiplier" />
                         </group>
                     </page>
                 </notebook>
@@ -113,12 +175,12 @@
 </record>
 
 <menuitem
-    id="utility_meter_reading_menu"
-    name="Meter Readings"
-    parent="utility_meter_reading_root_menu"
-    action="utility_meter_reading_action"
-    sequence="1"
-    />
+            id="utility_meter_reading_menu"
+            name="Meter Readings"
+            parent="utility_meter_reading_root_menu"
+            action="utility_meter_reading_action"
+            sequence="1"
+        />
 
 </data>
 </openerp>

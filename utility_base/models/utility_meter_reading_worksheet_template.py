@@ -2,7 +2,7 @@
 # Copyright 2019 OpenSynergy Indonesia
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, fields, api
+from openerp import api, fields, models
 
 
 class UtilityMeterReadingWorksheetTemplate(models.Model):
@@ -135,8 +135,7 @@ class UtilityMeterReadingWorksheetTemplate(models.Model):
     @api.multi
     def _prepare_cron_data(self):
         self.ensure_one()
-        cron_name = "Generate Meter Utility Reading Worksheet: %s" % (
-            self.name)
+        cron_name = "Generate Meter Utility Reading Worksheet: %s" % (self.name)
         return {
             "name": cron_name,
             "user_id": self.env.user.id,
